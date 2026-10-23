@@ -1,12 +1,56 @@
 ﻿<Window x:Class="Dynamic_Island_Window.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Dynamic_Island_Window"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Dynamic Island" 
+        Height="100" Width="800" 
+        WindowStyle="None" 
+        AllowsTransparency="True" 
+        Background="Transparent" 
+        Topmost="True" 
+        ShowInTaskbar="False">
 
+    <!-- Lớp lưới chứa viên thuốc -->
+    <Grid>
+        <!-- VIÊN THUỐC ĐƯỢC ĐẶT TÊN LÀ IslandBorder -->
+        <!-- Thêm các sự kiện chuột vào Border để nhận diện thao tác vuốt -->
+        <Border x:Name="IslandBorder" 
+                Background="Black" 
+                CornerRadius="25" 
+                Height="50" 
+                Width="50" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Top"
+                Margin="0,10,0,0"
+                RenderTransformOrigin="0.5, 0.5"
+                MouseDown="IslandBorder_MouseDown"
+                MouseMove="IslandBorder_MouseMove"
+                MouseUp="IslandBorder_MouseUp">
+
+            <!-- Trái tim của các hiệu ứng Zoom và Trượt -->
+            <Border.RenderTransform>
+                <TransformGroup>
+                    <!-- ScaleX/Y = 0 nghĩa là ban đầu nó tàng hình -->
+                    <ScaleTransform x:Name="IslandScale" ScaleX="0" ScaleY="0" />
+                    <!-- Trượt lên/xuống -->
+                    <TranslateTransform x:Name="IslandTranslate" Y="0" />
+                </TransformGroup>
+            </Border.RenderTransform>
+
+            <Grid>
+                <!-- Thêm Opacity="0" để giấu chữ đi lúc nó mới là hình tròn -->
+                <TextBlock x:Name="txtMedia"
+                           Text="Đang chờ..." 
+                           Foreground="White" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           FontWeight="Bold"
+                           TextTrimming="CharacterEllipsis" 
+                           Margin="20,0"
+                           Opacity="0"/>
+
+                <!-- Một chấm xanh nhỏ hiện ra khi Island trượt lên (Peek state) -->
+                <Ellipse x:Name="PeekIndicator" Width="8" Height="8" Fill="#00FF00" VerticalAlignment="Bottom" Margin="0,0,0,5" Opacity="0"/>
+            </Grid>
+        </Border>
     </Grid>
 </Window>
